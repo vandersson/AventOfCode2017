@@ -24,7 +24,7 @@ object Part2 {
       case root: Node => findUnbalancedChild(root.children) match {
         case None => println("root is unbalanced?!?")
         case Some((c, targetW)) => unbalancedCorrectWeight(c, targetW) match {
-          case None => "ingen funnet?!?"
+          case None => println("ingen funnet?!?")
           case Some(correctWeight) => println(s"correctWeight: $correctWeight")
         }
       }

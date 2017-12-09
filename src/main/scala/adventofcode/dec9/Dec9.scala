@@ -35,18 +35,18 @@ object Dec9 {
         case '<' => procChar(td, Garbage, currDepth, score)
         case c => throw new IllegalStateException(s"State $state Illegal char $c")
       }
-      case Next => hd match {
+      case EndThing => hd match {
         case ',' => procChar(td, Start, currDepth, score)
-        case '}' => procChar(td, Next, currDepth-1, incGroupScore(score, currDepth))
+        case '}' => procChar(td, EndThing, currDepth-1, incGroupScore(score, currDepth))
         case c => throw new IllegalStateException(s"State $state Illegal char $c")
-      }
+       }
       case Garbage => hd match {
-        case '>' => procChar(td, Next, currDepth, score)
-        case _ => procChar(td, state, currDepth, incGarbageCount(score))
+        case '>' => procChar(td, EndThing, currDepth, score)
+        case _ => procChar(td, Garbage, currDepth, incGarbageCount(score))
       }
       case Group => hd match {
         case '{' => procChar(td, Group, currDepth+1, score)
-        case '}' => procChar(td, Next, currDepth-1, incGroupScore(score, currDepth))
+        case '}' => procChar(td, EndThing, currDepth-1, incGroupScore(score, currDepth))
         case '<' => procChar(td, Garbage, currDepth, score)
         case c => throw new IllegalStateException(s"State $state Illegal char $c")
       }
@@ -61,15 +61,10 @@ object Dec9 {
 }
 
 sealed trait State
-
 case object Group extends State
-
 case object Garbage extends State
-
-case object Next extends State
-
+case object EndThing extends State
 case object Start extends State
-
 case class GarbageScore(val groupscore: Int, val garbageChars: Int)
 
 
