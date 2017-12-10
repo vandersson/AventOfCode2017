@@ -1,8 +1,1 @@
-
-
-Array(1,2,3)
-
-List(1,2,3) == List(1,2,2)
-
-
-"sfsaf   -> 32  rew".split("->")
+for (i <- 0 to 10-1) println(i)
